@@ -1,0 +1,157 @@
+
+entregable01.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000130  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000dc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000130  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000160  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  000001a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006a6  00000000  00000000  000001c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000609  00000000  00000000  00000866  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000221  00000000  00000000  00000e6f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00001090  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000371  00000000  00000000  000010b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000076  00000000  00000000  00001425  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  0000149b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 40 00 	call	0x80	; 0x80 <main>
+  78:	0c 94 6c 00 	jmp	0xd8	; 0xd8 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <main>:
+#define F_CPU 16000000UL
+#include "util/delay.h"
+
+int main(void)
+{
+	DDRB = 0xFF; /* PUERTO B -> OUTPUT */
+  80:	8f ef       	ldi	r24, 0xFF	; 255
+  82:	84 b9       	out	0x04, r24	; 4
+	DDRC = 0x00; /* PUERTO C -> INPUT  */
+  84:	17 b8       	out	0x07, r1	; 7
+	PINC = 0x01;
+  86:	81 e0       	ldi	r24, 0x01	; 1
+  88:	86 b9       	out	0x06, r24	; 6
+	
+	char shifted_bits = 0x01;
+	char shift_direction = 0xFF;
+  8a:	4f ef       	ldi	r20, 0xFF	; 255
+	
+	while(1)
+	{
+		/* READ BUTTON */
+		if((PINC& (1<<PINC0)) == 0)
+  8c:	30 99       	sbic	0x06, 0	; 6
+  8e:	02 c0       	rjmp	.+4      	; 0x94 <main+0x14>
+		{
+			//_delay_ms(200);
+			if((PINC& (1 << PINC0)) == 0)
+  90:	30 9b       	sbis	0x06, 0	; 6
+			{
+				//_delay_ms(20);
+				shift_direction = ~ shift_direction;	
+  92:	40 95       	com	r20
+			}
+		}
+		
+		/* SHIFTING */
+		if (shift_direction) shifted_bits++;
+  94:	44 23       	and	r20, r20
+  96:	19 f0       	breq	.+6      	; 0x9e <main+0x1e>
+  98:	21 e0       	ldi	r18, 0x01	; 1
+  9a:	28 0f       	add	r18, r24
+  9c:	02 c0       	rjmp	.+4      	; 0xa2 <main+0x22>
+			else shifted_bits--;
+  9e:	2f ef       	ldi	r18, 0xFF	; 255
+  a0:	28 0f       	add	r18, r24
+
+		shifted_bits %= 7;
+  a2:	85 e2       	ldi	r24, 0x25	; 37
+  a4:	28 9f       	mul	r18, r24
+  a6:	91 2d       	mov	r25, r1
+  a8:	11 24       	eor	r1, r1
+  aa:	82 2f       	mov	r24, r18
+  ac:	89 1b       	sub	r24, r25
+  ae:	86 95       	lsr	r24
+  b0:	89 0f       	add	r24, r25
+  b2:	86 95       	lsr	r24
+  b4:	86 95       	lsr	r24
+  b6:	98 2f       	mov	r25, r24
+  b8:	99 0f       	add	r25, r25
+  ba:	99 0f       	add	r25, r25
+  bc:	99 0f       	add	r25, r25
+  be:	98 1b       	sub	r25, r24
+  c0:	29 1b       	sub	r18, r25
+  c2:	82 2f       	mov	r24, r18
+		
+		PORTB = 1 << shifted_bits;	
+  c4:	21 e0       	ldi	r18, 0x01	; 1
+  c6:	30 e0       	ldi	r19, 0x00	; 0
+  c8:	08 2e       	mov	r0, r24
+  ca:	02 c0       	rjmp	.+4      	; 0xd0 <main+0x50>
+  cc:	22 0f       	add	r18, r18
+  ce:	33 1f       	adc	r19, r19
+  d0:	0a 94       	dec	r0
+  d2:	e2 f7       	brpl	.-8      	; 0xcc <main+0x4c>
+  d4:	25 b9       	out	0x05, r18	; 5
+	}
+  d6:	da cf       	rjmp	.-76     	; 0x8c <main+0xc>
+
+000000d8 <_exit>:
+  d8:	f8 94       	cli
+
+000000da <__stop_program>:
+  da:	ff cf       	rjmp	.-2      	; 0xda <__stop_program>
